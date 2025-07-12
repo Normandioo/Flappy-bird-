@@ -30,6 +30,13 @@ public class Player : MonoBehaviour
         InvokeRepeating(nameof(AnimateSprite), 0.15f, 0.15f);
     }
 
+    private void OnEnable()
+    {
+        Vector2 position = transform.position;
+        position.y = 0f;
+        transform.position = position;
+    }
+
     void Update()
     {
         //checks if the key "space" or the leftMouseButton were pressed. If its True, sets the jump variable to true
@@ -73,13 +80,17 @@ public class Player : MonoBehaviour
     //When the rigidBody enters another Collider2D
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //checks if the gameObject tag is an obstacle
+        //checks if the gameObject tag is an obstacle, if its true
         if (other.gameObject.tag == "Obstacle")
         {
+            //find the GameManager object and call the method GameOver inside its script
             FindFirstObjectByType<GameManager>().GameOver();
         }
+
+        //else if the gameObject has a "Scoring" tag
         else if (other.gameObject.tag == "Scoring")
         {
+            //find the GameManager object and call the method 'IncreaseScore' inside its script
             FindFirstObjectByType<GameManager>().IncreaseScore();
         }
     }
