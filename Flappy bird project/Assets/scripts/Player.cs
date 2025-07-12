@@ -9,9 +9,9 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private bool Jump = false;
     private int SpriteIndex;
-    public float jumpForce = 5f;
+    [SerializeField] float jumpForce = 5f;
 
-    public Sprite[] Sprites;
+    [SerializeField] Sprite[] Sprites;
 
 
 
@@ -24,12 +24,14 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        //Repeats the method 'AnimateSprite' each 0.15 seconds and with a repeat rate of 0.15 seconds
+        //PT-BR: Essa funcao faz o metodo 'AnimateSprite' repetir a cada 0.15 segundos com uma frequencia de repeticao de 0.15 segundos
         InvokeRepeating(nameof(AnimateSprite), 0.15f, 0.15f);
     }
 
     void Update()
     {
-        //checks if the key "space" or the leftMouseButton were pressed, if its True, sets the jump variable to true
+        //checks if the key "space" or the leftMouseButton were pressed. If its True, sets the jump variable to true
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             Jump = true;
     }
@@ -38,7 +40,7 @@ public class Player : MonoBehaviour
     {
         if (Jump)
         {
-            //sets the jump to false and sets the vertical velocity to 0
+            //sets the variable jump to false and sets the vertical velocity to 0
             Jump = false;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
 
@@ -47,14 +49,23 @@ public class Player : MonoBehaviour
         }
     }
 
+
+//method to Animate the character sprite
     private void AnimateSprite()
     {
+        //sums the variable with herself +1 SprinteIndex += SpriteIndex 
         SpriteIndex++;
+
+        //if the variable 'SpriteIndex' is equal or greater than the length of Sprites array:
+        //Sets SpritesIndex to 0
         if (SpriteIndex >= Sprites.Length)
         {
             SpriteIndex = 0;
         }
 
+        //makes the sprite of the spriteRenderer component receive the current sprite marked by the SpriteIndex inside the Sprites array
+        //PT-BR faz o elemento 'sprite ' do componente 'spriteRenderer' receber o sprite que esta localizado dentro do array 'Sprites' definido pelo
+        //do 'SpriteIndex'
         SpriteRenderer.sprite = Sprites[SpriteIndex];
     }
 }
