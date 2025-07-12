@@ -1,5 +1,6 @@
 
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -50,7 +51,7 @@ public class Player : MonoBehaviour
     }
 
 
-//method to Animate the character sprite
+    //method to Animate the character sprite
     private void AnimateSprite()
     {
         //sums the variable with herself +1 SprinteIndex += SpriteIndex 
@@ -68,7 +69,28 @@ public class Player : MonoBehaviour
         //do 'SpriteIndex'
         SpriteRenderer.sprite = Sprites[SpriteIndex];
     }
+
+    //When the rigidBody enters another Collider2D
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //checks if the gameObject tag is an obstacle
+        if (other.gameObject.tag == "Obstacle")
+        {
+            FindFirstObjectByType<GameManager>().GameOver();
+        }
+        else if (other.gameObject.tag == "Scoring")
+        {
+            FindFirstObjectByType<GameManager>().IncreaseScore();
+        }
+    }
+        
+    
+
+
 }
+
+
+
 
 
 
